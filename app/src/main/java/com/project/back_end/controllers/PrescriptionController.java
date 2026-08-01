@@ -15,16 +15,15 @@ public class PrescriptionController {
     @Autowired
     private TokenService tokenService;
 
-    @PostMapping
-    public ResponseEntity<?> savePrescription(
-            @RequestHeader("Authorization") String token,
+    @PostMapping("/{token}")
+    public ResponseEntity<Map<String, String>> savePrescription(
+            @PathVariable String token,
             @Valid @RequestBody Map<String, Object> prescriptionRequest) {
 
         if (!tokenService.validateToken(token)) {
-            return ResponseEntity.status(401).body("Unauthorized: Invalid token");
+            return ResponseEntity.status(401).body(Map.of("error", "Unauthorized: Invalid token"));
         }
 
-        // Reçete kaydetme başarı yanıtı
         return ResponseEntity.ok(Map.of("message", "Prescription saved successfully"));
     }
 }
