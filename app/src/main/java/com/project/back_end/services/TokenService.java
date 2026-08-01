@@ -11,17 +11,14 @@ import java.util.Date;
 @Service
 public class TokenService {
 
-    // HMAC signing key used to sign and validate JWTs in this demo application.
-    private final String SECRET_KEY = System.getenv().getOrDefault(
-            "JWT_SECRET_KEY",
-            "mysecretkeymysecretkeymysecretkeymysecretkey"
-    );
+    // A single symmetric HMAC key is generated once for the application lifecycle.
+    private final Key signingKey = Keys.secretKeyFor(SignatureAlgorithm.HS256);
 
     /**
      * Builds the symmetric signing key used for JWT creation and validation.
      */
     public Key getSigningKey() {
-        return Keys.hmacShaKeyFor(SECRET_KEY.getBytes());
+        return signingKey;
     }
 
     /**
