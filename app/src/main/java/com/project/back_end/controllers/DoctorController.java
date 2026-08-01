@@ -21,7 +21,7 @@ public class DoctorController {
     private TokenService tokenService;
 
     @GetMapping("/{user}/{doctorId}/availability")
-    public ResponseEntity<?> getDoctorAvailability(
+    public ResponseEntity<Map<String, Object>> getDoctorAvailability(
             @RequestHeader("Authorization") String token,
             @PathVariable String user,
             @PathVariable Long doctorId,
